@@ -3,7 +3,6 @@ load("math.star", "math")
 load("render.star", "render")
 load("time.star", "time")
 
-
 FRAME_WIDTH = 64
 FRAME_HEIGHT = 32
 
@@ -26,7 +25,6 @@ NUM_X_POSITIONS = FRAME_WIDTH - IMAGE_WIDTH
 NUM_Y_POSITIONS = FRAME_HEIGHT - IMAGE_HEIGHT
 NUM_STATES = NUM_X_POSITIONS * NUM_Y_POSITIONS * len(COLORS) * 2
 
-
 def main():
     delay = 100 * time.millisecond
     frames_per_second = time.second / delay
@@ -44,10 +42,9 @@ def main():
     ]
 
     return render.Root(
-        delay=delay.milliseconds,
-        child=render.Animation(frames)
+        delay = delay.milliseconds,
+        child = render.Animation(frames),
     )
-
 
 def get_state(index):
     num_x_hits = index // NUM_X_POSITIONS
@@ -71,25 +68,24 @@ def get_state(index):
     color = COLORS[num_hits % len(COLORS)]
 
     return struct(
-        pos_x=pos_x,
-        pos_y=pos_y,
-        vel_x=vel_x,
-        vel_y=vel_y,
-        color=color,
+        pos_x = pos_x,
+        pos_y = pos_y,
+        vel_x = vel_x,
+        vel_y = vel_y,
+        color = color,
     )
-
 
 def get_frame(state):
     return render.Padding(
-        pad=(state.pos_x, state.pos_y, 0, 0),
-        child=render.Stack(
-            children=[
+        pad = (state.pos_x, state.pos_y, 0, 0),
+        child = render.Stack(
+            children = [
                 render.Box(
-                    width=IMAGE_WIDTH,
-                    height=IMAGE_HEIGHT,
-                    color=state.color,
+                    width = IMAGE_WIDTH,
+                    height = IMAGE_HEIGHT,
+                    color = state.color,
                 ),
                 render.Image(base64.decode(IMAGE)),
-            ]
-        )
+            ],
+        ),
     )
